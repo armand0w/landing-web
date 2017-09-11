@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AplicativoService } from '../../services/aplicativo.service';
 
 @Component({
@@ -8,101 +8,111 @@ import { AplicativoService } from '../../services/aplicativo.service';
 })
 export class LandingComponent implements OnInit {
 
-  @Input() completado: number = 0;
-  onProgress = false;
-  // urLanding = 'http://localhost:8080/mn-landing-page-services/landing/';
-  urLanding = 'http://des.face7.masnegocio.com/mn-landing-page-services/landing/';
-  sufix = '_e_xpenses_enterprise_v3';
-  cliente: object = {
-    p_clave_producto:  'MN-EXPENSES-ENTERPRISE-V30',
-    connection_reference:  'cnnExpensesSemillaV10'
-  };
-  eventos: object [] = [
-    {
-      url: this.urLanding + 'validar',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: {}
-    },
-    {
-      url: this.urLanding + 'crearcliente',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: {}
-    },
-    {
-      url: this.urLanding + 'crearparametros',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: {}
-    },
-    {
-      url: this.urLanding + 'crearschema',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: {}
-    },
-    {
-      url: this.urLanding + 'crearartefacto',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: {}
-    },
-    {
-      url: this.urLanding + 'creararnotificacion',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: {}
-    },
-    {
-      url: this.urLanding + 'crearproperties',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: {}
-    },
-    {
-      url: this.urLanding + 'copiarwar',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: {}
-    },
-    {
-      url: this.urLanding + 'usuario',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: {}
-    },
-    {
-      url: this.urLanding + 'reset',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: {}
-    }
-  ];
+  public completado: number;
+  public onProgress: boolean;
+
+  private urLanding: string;
+  private sufix: string;
+  private cliente: object ;
+  private eventos: object [];
 
   constructor( protected _aplicativoService: AplicativoService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.completado = 0;
+    this.onProgress = false;
+    this.sufix = '_e_xpenses_enterprise_v3';
+    this.cliente = {
+      p_clave_producto:  'MN-EXPENSES-ENTERPRISE-V30',
+      connection_reference:  'cnnExpensesSemillaV10'
+    };
+
+    // this.urLanding = 'http://des.face7.masnegocio.com/mn-landing-page-services/landing/';
+    this.urLanding = 'http://localhost:8080/mn-landing-page-services/landing/';
+
+    this.eventos = [
+      {
+        url: this.urLanding + 'validar',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: {}
+      },
+      {
+        url: this.urLanding + 'crearcliente',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: {}
+      },
+      {
+        url: this.urLanding + 'crearparametros',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: {}
+      },
+      {
+        url: this.urLanding + 'crearschema',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: {}
+      },
+      {
+        url: this.urLanding + 'crearartefacto',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: {}
+      },
+      {
+        url: this.urLanding + 'creararnotificacion',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: {}
+      },
+      {
+        url: this.urLanding + 'crearproperties',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: {}
+      },
+      {
+        url: this.urLanding + 'copiarwar',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: {}
+      },
+      {
+        url: this.urLanding + 'usuario',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: {}
+      },
+      {
+        url: this.urLanding + 'reset',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: {}
+      }
+    ];
+  }
 
   crearApp(): void {
     this.onProgress = true;
@@ -125,16 +135,6 @@ export class LandingComponent implements OnInit {
       event['body'] = this.cliente;
     }
 
-    /*this._aplicativoService.consumir( this.eventos[0] )
-      .subscribe( data => {
-        console.log( data );
-      });*/
-
-    /*this._aplicativoService.consumirPromesa( this.eventos[0] )
-      .then( data => {
-        console.log(data);
-      });*/
-
     this.delayedEventLoop( this.eventos, this._aplicativoService, this.completado ).then(
       (val) => console.log(val),
       (err) => console.error(err)
@@ -151,10 +151,8 @@ export class LandingComponent implements OnInit {
         if ( continueLoop ) {
           serv.consumirPromesa( item )
             .then( data => {
-              // console.log( data );
               lastResponse = data;
               if ( data && data.continue ) {
-                bar += 10;
                 console.log( data );
               } else {
                 resolve( lastResponse );
