@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AplicativoService } from '../../services/aplicativo.service';
 
 @Component({
@@ -8,9 +8,10 @@ import { AplicativoService } from '../../services/aplicativo.service';
 })
 export class LandingComponent implements OnInit {
 
-  completado = 0;
+  @Input() completado: number = 0;
   onProgress = false;
-  urLanding = 'http://localhost:8080/mn-landing-page-services/landing/';
+  // urLanding = 'http://localhost:8080/mn-landing-page-services/landing/';
+  urLanding = 'http://des.face7.masnegocio.com/mn-landing-page-services/landing/';
   sufix = '_e_xpenses_enterprise_v3';
   cliente: object = {
     p_clave_producto:  'MN-EXPENSES-ENTERPRISE-V30',
@@ -106,6 +107,7 @@ export class LandingComponent implements OnInit {
   crearApp(): void {
     this.onProgress = true;
 
+    this.cliente['p_password'] = this.cliente['p_clave_usuario'];
     this.cliente['p_apellidos'] = this.cliente['apellidop'] + ' ' + this.cliente['apellidom'];
     this.cliente['schema_name'] = 'mn_' + this.cliente['p_contexto'] + this.sufix;
     this.cliente['artifact_conn'] = 'cnn' + this.cliente['p_contexto'][0].toUpperCase() +
@@ -133,13 +135,13 @@ export class LandingComponent implements OnInit {
         console.log(data);
       });*/
 
-    this.delayedEventLoop( this.eventos, this._aplicativoService ).then(
+    this.delayedEventLoop( this.eventos, this._aplicativoService, this.completado ).then(
       (val) => console.log(val),
       (err) => console.error(err)
     );
   }
 
-  delayedEventLoop( array, serv ) {
+  delayedEventLoop( array, serv, bar ) {
     let promise = null;
     let lastResponse = {};
     function loop( cont ) {
@@ -152,8 +154,8 @@ export class LandingComponent implements OnInit {
               // console.log( data );
               lastResponse = data;
               if ( data && data.continue ) {
+                bar += 10;
                 console.log( data );
-                this.completado = this.completado + 10;
               } else {
                 resolve( lastResponse );
                 continueLoop = false;
