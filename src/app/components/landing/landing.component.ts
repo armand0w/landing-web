@@ -11,15 +11,19 @@ export class LandingComponent implements OnInit {
   public completado: number;
   public onProgress: boolean;
   public message: string;
+  public url: string;
 
-  private urLanding: string;
-  private sufix: string;
-  private cliente: object ;
-  private eventos: object [];
+  public urLanding: string;
+  public sufix: string;
+  public cliente: any;
+  public eventos: object [];
 
   constructor( protected _aplicativoService: AplicativoService ) {}
 
   ngOnInit() {
+    this.url = 'http://des.face7.masnegocio.com/';
+    // this.urLanding = 'http://des.face7.masnegocio.com/mn-landing-page-services/landing/';
+    this.urLanding = 'http://localhost:8080/mn-landing-page-services/landing/';
     this.completado = 0;
     this.onProgress = false;
     this.sufix = '_e_xpenses_enterprise_v3';
@@ -27,9 +31,6 @@ export class LandingComponent implements OnInit {
       p_clave_producto:  'MN-EXPENSES-ENTERPRISE-V30',
       connection_reference:  'cnnExpensesSemillaV10'
     };
-
-    // this.urLanding = 'http://des.face7.masnegocio.com/mn-landing-page-services/landing/';
-    this.urLanding = 'http://localhost:8080/mn-landing-page-services/landing/';
 
     this.eventos = [
       {
@@ -170,5 +171,9 @@ export class LandingComponent implements OnInit {
     };
 
     loopEvents();
+  }
+
+  claveUsuarioToUpper(): void {
+    this.cliente['p_clave_usuario'] = this.cliente['p_clave_usuario'].toUpperCase();
   }
 }
