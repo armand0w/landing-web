@@ -10,13 +10,14 @@ export class LandingComponent implements OnInit {
 
   public completado: number;
   public onProgress: boolean;
+  public message: string;
 
   private urLanding: string;
   private sufix: string;
   private cliente: object ;
   private eventos: object [];
 
-  constructor( protected _aplicativoService: AplicativoService) {}
+  constructor( protected _aplicativoService: AplicativoService ) {}
 
   ngOnInit() {
     this.completado = 0;
@@ -135,45 +136,39 @@ export class LandingComponent implements OnInit {
       event['body'] = this.cliente;
     }
 
-    this.delayedEventLoop( this.eventos, this._aplicativoService, this.completado ).then(
-      (val) => console.log(val),
-      (err) => console.error(err)
-    );
-  }
+    let loopEvents = () => {
+      let lastResponse = {};
 
-  delayedEventLoop( array, serv, bar ) {
-    let promise = null;
-    let lastResponse = {};
-    function loop( cont ) {
-      let item = array[cont];
-      let continueLoop = true;
-      promise = new Promise((resolve, reject) => {
+      let loop = ( cont ) => {
+        let item = this.eventos[cont];
+        let continueLoop = true;
+
         if ( continueLoop ) {
-          serv.consumirPromesa( item )
-            .then( data => {
+          this._aplicativoService.consumirPromesa( item )
+            .then( ( data ) => {
               lastResponse = data;
-              if ( data && data.continue ) {
-                console.log( data );
+              this.message = data['message'];
+              if ( data && data['continue'] ) {
+                this.completado += 10;
               } else {
-                resolve( lastResponse );
                 continueLoop = false;
               }
             })
-            .then(function () {
-              if (continueLoop && cont !== array.length - 1) {
+            .then( () => {
+              if ( continueLoop && cont !== this.eventos.length - 1 ) {
                 loop( ++cont );
               } else {
                 lastResponse['rootEvent'] = item;
-                reject(lastResponse);
               }
             });
         } else {
           continueLoop = false;
         }
-      });
-    }
+      };
 
-    loop(0);
-    return promise;
+      loop( 0 );
+    };
+
+    loopEvents();
   }
 }

@@ -60,7 +60,7 @@
       <div class="form-group" [hidden]="!onProgress">
         <div class="progress">
           <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" [attr.aria-valuenow]="completado"
-               aria-valuemin="0" aria-valuemax="100" [style.width.%]="completado">
+               aria-valuemin="0" aria-valuemax="100" [style.width.%]="completado"> {{ message }}
           </div>
         </div>
       </div>
