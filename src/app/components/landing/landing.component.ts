@@ -21,99 +21,104 @@ export class LandingComponent implements OnInit {
   constructor( protected _aplicativoService: AplicativoService ) {}
 
   ngOnInit() {
-    this.url = 'http://des.face7.masnegocio.com/';
-    // this.urLanding = 'http://des.face7.masnegocio.com/mn-landing-page-services/landing/';
-    this.urLanding = 'http://localhost:8080/mn-landing-page-services/landing/';
+    this.cliente = { p_clave_usuario: '' };
+
+    this._aplicativoService.properties()
+      .then( ( prop ) => {
+        this.url = prop['url'];
+        this.urLanding = prop['urLanding'];
+        this.sufix = prop['sufix'];
+        this.cliente = {
+          p_clave_usuario: '',
+          p_clave_producto: prop['clave_producto'],
+          connection_reference: prop['connection_reference']
+        };
+        this.eventos = [
+          {
+            url: this.urLanding + 'validar',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: {}
+          },
+          {
+            url: this.urLanding + 'crearcliente',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: {}
+          },
+          {
+            url: this.urLanding + 'crearparametros',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: {}
+          },
+          {
+            url: this.urLanding + 'crearschema',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: {}
+          },
+          {
+            url: this.urLanding + 'crearartefacto',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: {}
+          },
+          {
+            url: this.urLanding + 'creararnotificacion',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: {}
+          },
+          {
+            url: this.urLanding + 'crearproperties',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: {}
+          },
+          {
+            url: this.urLanding + 'copiarwar',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: {}
+          },
+          {
+            url: this.urLanding + 'usuario',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: {}
+          },
+          {
+            url: this.urLanding + 'reset',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: {}
+          }
+        ];
+      });
+
     this.completado = 0;
     this.onProgress = false;
-    this.sufix = '_e_xpenses_enterprise_v3';
-    this.cliente = {
-      p_clave_producto:  'MN-EXPENSES-ENTERPRISE-V30',
-      connection_reference:  'cnnExpensesSemillaV10'
-    };
-
-    this.eventos = [
-      {
-        url: this.urLanding + 'validar',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: {}
-      },
-      {
-        url: this.urLanding + 'crearcliente',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: {}
-      },
-      {
-        url: this.urLanding + 'crearparametros',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: {}
-      },
-      {
-        url: this.urLanding + 'crearschema',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: {}
-      },
-      {
-        url: this.urLanding + 'crearartefacto',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: {}
-      },
-      {
-        url: this.urLanding + 'creararnotificacion',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: {}
-      },
-      {
-        url: this.urLanding + 'crearproperties',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: {}
-      },
-      {
-        url: this.urLanding + 'copiarwar',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: {}
-      },
-      {
-        url: this.urLanding + 'usuario',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: {}
-      },
-      {
-        url: this.urLanding + 'reset',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: {}
-      }
-    ];
   }
 
   crearApp(): void {
@@ -171,9 +176,5 @@ export class LandingComponent implements OnInit {
     };
 
     loopEvents();
-  }
-
-  claveUsuarioToUpper(): void {
-    this.cliente['p_clave_usuario'] = this.cliente['p_clave_usuario'].toUpperCase();
   }
 }

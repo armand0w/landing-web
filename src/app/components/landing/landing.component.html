@@ -94,10 +94,11 @@
 
         <div class="form-group" [hidden]="!onProgress">
           <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" [attr.aria-valuenow]="completado"
-                 aria-valuemin="0" aria-valuemax="100" [style.width.%]="completado"> {{ message }}
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" [attr.aria-valuenow]="completado"
+                 aria-valuemin="0" aria-valuemax="100" [style.width.%]="completado"> {{ completado }} %
             </div>
           </div>
+          <p class="text-info">{{ message }}</p>
         </div>
 
         <button class="btn btn-info btn-sm float-right" [disabled]="!clienteForm.form.valid" (click)="crearApp()">Crear Aplicativo</button>
