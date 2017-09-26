@@ -35,7 +35,7 @@ export class LandingComponent implements OnInit {
         };
         this.eventos = [
           {
-            url: this.urLanding + 'validar',
+            url: this.urLanding + 'test',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -43,7 +43,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Verifivando existencia.' }
           },
           {
-            url: this.urLanding + 'crearcliente',
+            url: this.urLanding + 'test',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -51,7 +51,7 @@ export class LandingComponent implements OnInit {
             body: {  message: 'Creando cliente.' }
           },
           {
-            url: this.urLanding + 'crearparametros',
+            url: this.urLanding + 'test',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -59,7 +59,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando parametros de aplicativo.' }
           },
           {
-            url: this.urLanding + 'crearschema',
+            url: this.urLanding + 'test',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -67,7 +67,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando BD, esto puede tardar un poco.' }
           },
           {
-            url: this.urLanding + 'crearartefacto',
+            url: this.urLanding + 'test',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -75,7 +75,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando artefacto.' }
           },
           {
-            url: this.urLanding + 'creararnotificacion',
+            url: this.urLanding + 'test',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -83,7 +83,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando parametros para notificaciones.' }
           },
           {
-            url: this.urLanding + 'crearproperties',
+            url: this.urLanding + 'test',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -91,7 +91,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando archivo properties.' }
           },
           {
-            url: this.urLanding + 'copiarwar',
+            url: this.urLanding + 'test',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -99,7 +99,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Copiando archivo WAR.' }
           },
           {
-            url: this.urLanding + 'usuario',
+            url: this.urLanding + 'test',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -107,7 +107,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando usuario administrador.' }
           },
           {
-            url: this.urLanding + 'reset',
+            url: this.urLanding + 'test',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'

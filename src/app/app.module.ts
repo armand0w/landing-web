@@ -9,11 +9,13 @@ import { LandingComponent } from './components/landing/landing.component';
 
 // Services
 import { AplicativoService } from './services/aplicativo.service';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LandingComponent
+    LandingComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
