@@ -1,64 +1,15 @@
 <div class="container">
+  <div class="text-center">
+    <h4>¡ESTAS A POCOS PASOS DE EMPEZAR A AHORRAR Y CONTROLAR TUS GASTOS!</h4>
+    <h6>Por favor llena la siguiente información para crear tu aplicativo y  puedas configurar tu sistema.</h6><br><br>
+  </div>
   <form #clienteForm="ngForm" novalidate>
     <div class="card">
-      <h4 class="card-header bg-primary text-white">Datos de Aplicativo</h4>
-
+      <h4 class="card-header">Datos de la Empresa</h4>
       <div class="card-body">
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="usuario" class="col-form-label font-weight-bold">Clave de Usuario</label>
-            <input type="text" class="form-control" id="usuario" placeholder="USUARIO_MN" pattern="^[A-Z0-9_-]+$"
-                   [(ngModel)]="cliente.p_clave_usuario"
-                   name="usuario" #usuario="ngModel" required>
-            <div [hidden]="usuario.valid || usuario.pristine" class="alert alert-danger">
-              <div [hidden]="!usuario.hasError('required')">La clave de usuario es requerida.</div>
-              <div [hidden]="!usuario.hasError('pattern')">Solo se permiten letras mayusculas, numeros y guiones</div>
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="nombre" class="col-form-label font-weight-bold">Nombre</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Nombre de Usuario"
-                   [(ngModel)]="cliente.p_nombre_usuario" name="nombre" #nombre="ngModel" required>
-            <div [hidden]="nombre.valid || nombre.pristine" class="alert alert-danger">
-              El nombre de usuario es requerido.
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="apellidop" class="col-form-label font-weight-bold">Apellido Paterno</label>
-            <input type="text" class="form-control" id="apellidop" placeholder="Apellido Paterno"
-                   [(ngModel)]="cliente.apellidop" name="apellidop" #apellidop="ngModel" required>
-            <div [hidden]="apellidop.valid || apellidop.pristine" class="alert alert-danger">
-              El Apellido Paterno de usuario es requerido.
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="apellidom" class="col-form-label font-weight-bold">Apellido Materno</label>
-            <input type="text" class="form-control" id="apellidom" placeholder="Apellido Materno"
-                   [(ngModel)]="cliente.apellidom" name="apellidom" #apellidom="ngModel" required>
-            <div [hidden]="apellidom.valid || apellidom.pristine" class="alert alert-danger">
-              El Apellido Materno de usuario es requerido.
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="correo" class="col-form-label font-weight-bold">Correo</label>
-          <input type="email" class="form-control" id="correo" placeholder="nombre@masnegocio.com"
-                 [(ngModel)]="cliente.p_correo_electronico"
-                 pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,4})$"
-                 name="correo" #correo="ngModel" required>
-          <div [hidden]="correo.valid || correo.pristine" class="alert alert-danger">
-            <div [hidden]="!correo.hasError('required')">El correo de usuario es requerido.</div>
-            <div [hidden]="!correo.hasError('pattern')">No es un correo valido.</div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="c_cliente" class="col-form-label font-weight-bold">Clave de Cliente</label>
+            <label for="c_cliente" class="col-form-label font-weight-bold">Identificador Fiscal</label>
             <input type="text" class="form-control" id="c_cliente" placeholder="MASNEGOCIO"
                    pattern="^[A-Z0-9_-]+$"
                    [(ngModel)]="cliente.p_clave_cliente" name="c_cliente" #c_cliente="ngModel" required>
@@ -69,7 +20,7 @@
           </div>
 
           <div class="form-group col-md-6">
-            <label for="n_cliente" class="col-form-label font-weight-bold">Nombre del Cliente</label>
+            <label for="n_cliente" class="col-form-label font-weight-bold">Nombre de la Empresa</label>
             <input type="text" class="form-control" id="n_cliente" placeholder="Más Negocio S.A.P.I. DE C.V."
                    [(ngModel)]="cliente.p_nombre_cliente" name="n_cliente" #n_cliente="ngModel" required>
             <div [hidden]="n_cliente.valid || n_cliente.pristine" class="alert alert-danger">
@@ -79,16 +30,71 @@
         </div>
 
         <div class="form-group">
-          <label for="contexto" class="col-form-label font-weight-bold">Contexto del Aplicativo</label>
+          <label for="contexto" class="col-form-label font-weight-bold">Nombre del Aplicativo <p><small>Elija un nombre corto relacionado con la empresa, el nombre debe tener una longitud de 4 a 8 caracteres.</small></p></label>
           <div class="input-group">
             <div class="input-group-addon">{{ url }}</div>
-            <input type="text" class="form-control" id="contexto" placeholder="contexto"
-                   pattern="^[a-z0-9_]+$"
+            <input type="text" class="form-control" id="contexto" placeholder="Nombre del Aplicativo"
+                   pattern="^[a-z0-9_]+$" data-toggle="tooltip" data-placement="top" title="Tooltip on top"
                    [(ngModel)]="cliente.p_contexto" name="contexto" #contexto="ngModel" required>
           </div>
           <div [hidden]="contexto.valid || contexto.pristine" class="alert alert-danger">
             <div [hidden]="!contexto.hasError('required')">El contexto es requerido.</div>
             <div [hidden]="!contexto.hasError('pattern')">La clave del cliente no es valida.</div>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="card-header">Datos del Administrador</h4>
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="nombre" class="col-form-label font-weight-bold">Nombre</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Nombre de Usuario"
+                   [(ngModel)]="cliente.p_nombre_usuario" name="nombre" #nombre="ngModel" required>
+            <div [hidden]="nombre.valid || nombre.pristine" class="alert alert-danger">
+              El nombre de usuario es requerido.
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="apellidop" class="col-form-label font-weight-bold">Apellido Paterno</label>
+            <input type="text" class="form-control" id="apellidop" placeholder="Apellido Paterno"
+                   [(ngModel)]="cliente.apellidop" name="apellidop" #apellidop="ngModel" required>
+            <div [hidden]="apellidop.valid || apellidop.pristine" class="alert alert-danger">
+              El Apellido Paterno de usuario es requerido.
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="apellidom" class="col-form-label font-weight-bold">Apellido Materno</label>
+            <input type="text" class="form-control" id="apellidom" placeholder="Apellido Materno"
+                   [(ngModel)]="cliente.apellidom" name="apellidom" #apellidom="ngModel" required>
+            <div [hidden]="apellidom.valid || apellidom.pristine" class="alert alert-danger">
+              El Apellido Materno de usuario es requerido.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="usuario" class="col-form-label font-weight-bold">Usuario de e-xpenses</label>
+            <input type="text" class="form-control" id="usuario" placeholder="USUARIO_MN" pattern="^[A-Z0-9_-]+$"
+                   [(ngModel)]="cliente.p_clave_usuario"
+                   name="usuario" #usuario="ngModel" required>
+            <div [hidden]="usuario.valid || usuario.pristine" class="alert alert-danger">
+              <div [hidden]="!usuario.hasError('required')">La clave de usuario es requerida.</div>
+              <div [hidden]="!usuario.hasError('pattern')">Solo se permiten letras mayusculas, numeros y guiones</div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-8">
+            <label for="correo" class="col-form-label font-weight-bold">Correo</label>
+            <input type="email" class="form-control" id="correo" placeholder="nombre@masnegocio.com"
+                   [(ngModel)]="cliente.p_correo_electronico"
+                   pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,4})$"
+                   name="correo" #correo="ngModel" required>
+            <div [hidden]="correo.valid || correo.pristine" class="alert alert-danger">
+              <div [hidden]="!correo.hasError('required')">El correo de usuario es requerido.</div>
+              <div [hidden]="!correo.hasError('pattern')">No es un correo valido.</div>
+            </div>
           </div>
         </div>
 
