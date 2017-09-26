@@ -40,7 +40,7 @@ export class LandingComponent implements OnInit {
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
             },
-            body: {}
+            body: { message: 'Verifivando existencia.' }
           },
           {
             url: this.urLanding + 'crearcliente',
@@ -48,7 +48,7 @@ export class LandingComponent implements OnInit {
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
             },
-            body: {}
+            body: {  message: 'Creando cliente.' }
           },
           {
             url: this.urLanding + 'crearparametros',
@@ -56,7 +56,7 @@ export class LandingComponent implements OnInit {
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
             },
-            body: {}
+            body: { message: 'Creando parametros de aplicativo.' }
           },
           {
             url: this.urLanding + 'crearschema',
@@ -64,7 +64,7 @@ export class LandingComponent implements OnInit {
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
             },
-            body: {}
+            body: { message: 'Creando BD, esto puede tardar un poco.' }
           },
           {
             url: this.urLanding + 'crearartefacto',
@@ -72,7 +72,7 @@ export class LandingComponent implements OnInit {
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
             },
-            body: {}
+            body: { message: 'Creando artefacto.' }
           },
           {
             url: this.urLanding + 'creararnotificacion',
@@ -80,7 +80,7 @@ export class LandingComponent implements OnInit {
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
             },
-            body: {}
+            body: { message: 'Creando parametros para notificaciones.' }
           },
           {
             url: this.urLanding + 'crearproperties',
@@ -88,7 +88,7 @@ export class LandingComponent implements OnInit {
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
             },
-            body: {}
+            body: { message: 'Creando archivo properties.' }
           },
           {
             url: this.urLanding + 'copiarwar',
@@ -96,7 +96,7 @@ export class LandingComponent implements OnInit {
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
             },
-            body: {}
+            body: { message: 'Copiando archivo WAR.' }
           },
           {
             url: this.urLanding + 'usuario',
@@ -104,7 +104,7 @@ export class LandingComponent implements OnInit {
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
             },
-            body: {}
+            body: { message: 'Creando usuario administrador.' }
           },
           {
             url: this.urLanding + 'reset',
@@ -112,7 +112,7 @@ export class LandingComponent implements OnInit {
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
             },
-            body: {}
+            body: { message: 'Actualizando datos del administrador.' }
           }
         ];
       });
@@ -121,7 +121,7 @@ export class LandingComponent implements OnInit {
     this.onProgress = false;
   }
 
-  crearApp(): void {
+  public crearApp(): void {
     this.onProgress = true;
 
     this.cliente['p_password'] = this.cliente['p_clave_usuario'];
@@ -138,18 +138,22 @@ export class LandingComponent implements OnInit {
       ]
     };
 
-    for ( let event of this.eventos ) {
-      event['body'] = this.cliente;
-    }
+    this.loopEvents()
+      .then( (res) => {
+        console.log('Termino');
+      });
+  }
 
-    let loopEvents = () => {
-      let lastResponse = {};
-
+  private loopEvents = () => {
+    let lastResponse = {};
+    return new Promise((resolve, reject) => {
       let loop = ( cont ) => {
         let item = this.eventos[cont];
         let continueLoop = true;
 
         if ( continueLoop ) {
+          this.message = item['body']['message'];
+          item['body'] = this.cliente;
           this._aplicativoService.consumirPromesa( item )
             .then( ( data ) => {
               lastResponse = data;
@@ -165,16 +169,17 @@ export class LandingComponent implements OnInit {
                 loop( ++cont );
               } else {
                 lastResponse['rootEvent'] = item;
+                resolve( lastResponse );
               }
+            })
+            .catch( err => {
+              continueLoop = false;
+              reject( err );
             });
-        } else {
-          continueLoop = false;
         }
       };
 
       loop( 0 );
-    };
-
-    loopEvents();
+    });
   }
 }
