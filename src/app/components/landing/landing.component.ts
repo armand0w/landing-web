@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AplicativoService } from '../../services/aplicativo.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-landing',
@@ -18,7 +20,8 @@ export class LandingComponent implements OnInit {
   public cliente: any;
   public eventos: object [];
 
-  constructor( protected _aplicativoService: AplicativoService ) {}
+  constructor( protected _aplicativoService: AplicativoService,
+               private _modalService: NgbModal ) {}
 
   ngOnInit() {
     this.cliente = { p_clave_usuario: '' };
@@ -35,7 +38,7 @@ export class LandingComponent implements OnInit {
         };
         this.eventos = [
           {
-            url: this.urLanding + 'test',
+            url: this.urLanding + 'validar',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -43,7 +46,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Verifivando existencia.' }
           },
           {
-            url: this.urLanding + 'test',
+            url: this.urLanding + 'crearcliente',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -51,7 +54,7 @@ export class LandingComponent implements OnInit {
             body: {  message: 'Creando cliente.' }
           },
           {
-            url: this.urLanding + 'test',
+            url: this.urLanding + 'crearparametros',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -59,7 +62,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando parametros de aplicativo.' }
           },
           {
-            url: this.urLanding + 'test',
+            url: this.urLanding + 'crearschema',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -67,7 +70,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando BD, esto puede tardar un poco.' }
           },
           {
-            url: this.urLanding + 'test',
+            url: this.urLanding + 'crearartefacto',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -75,7 +78,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando artefacto.' }
           },
           {
-            url: this.urLanding + 'test',
+            url: this.urLanding + 'creararnotificacion',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -83,7 +86,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando parametros para notificaciones.' }
           },
           {
-            url: this.urLanding + 'test',
+            url: this.urLanding + 'crearproperties',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -91,7 +94,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando archivo properties.' }
           },
           {
-            url: this.urLanding + 'test',
+            url: this.urLanding + 'copiarwar',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -99,7 +102,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Copiando archivo WAR.' }
           },
           {
-            url: this.urLanding + 'test',
+            url: this.urLanding + 'usuario',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -107,7 +110,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando usuario administrador.' }
           },
           {
-            url: this.urLanding + 'test',
+            url: this.urLanding + 'reset',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -140,8 +143,28 @@ export class LandingComponent implements OnInit {
 
     this.loopEvents()
       .then( (res) => {
-        console.log('Termino');
+        this.open( res );
       });
+  }
+
+  public open( response: any ): void {
+    const modalRef = this._modalService.open( ModalComponent, { size: 'lg'} );
+
+    if ( response['continue'] ) {
+      modalRef.componentInstance.inputs = {
+        title: '¡Felicidaces! Se ha creado tu aplicativo.',
+        typeClass: 'modal-header bg-success text-white',
+        textContent: 'En breve el administrador que definiste para el sistema recibirá un correo con sus accesos ' +
+        'para que pueda iniciar la configuración. <br><br> ' +
+        'En caso contrario contáctanos a <a href="mailto:soportecloud@masnegocio.com" target="_blank">soportecloud@masnegocio.com</a>'
+      };
+    } else {
+      modalRef.componentInstance.inputs = {
+        title: 'Error al crear aplicativo.',
+        typeClass: 'modal-header bg-danger text-white',
+        textContent: response['message']
+      };
+    }
   }
 
   private loopEvents = () => {
