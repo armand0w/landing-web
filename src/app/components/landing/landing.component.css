@@ -5,3 +5,9 @@
 .ng-invalid:not(form)  {
   border-left: 5px solid #ee5553; /* red */
 }
+
+.btn-masnegocio {
+  color: #fff;
+  background-color: #ff6a32;
+  border-color: #d98f36;
+}

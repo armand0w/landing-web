@@ -1,7 +1,7 @@
 <div class="container">
   <div class="text-center">
     <h4>¡ESTAS A POCOS PASOS DE EMPEZAR A AHORRAR Y CONTROLAR TUS GASTOS!</h4>
-    <h6>Por favor llena la siguiente información para crear tu aplicativo y  puedas configurar tu sistema.</h6><br><br>
+    <h6>Por favor llena la siguiente información para crear tu aplicativo y obtener tus accesos.</h6><br><br>
   </div>
   <form #clienteForm="ngForm" novalidate>
     <div class="card">
@@ -10,7 +10,7 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="c_cliente" class="col-form-label font-weight-bold">Identificador Fiscal</label>
-            <input type="text" class="form-control" id="c_cliente" placeholder="MASNEGOCIO"
+            <input type="text" class="form-control" id="c_cliente" placeholder="RFC, NIP o identificador fiscal"
                    pattern="^[A-Z0-9_-]+$"
                    [(ngModel)]="cliente.p_clave_cliente" name="c_cliente" #c_cliente="ngModel" required>
             <div [hidden]="c_cliente.valid || c_cliente.pristine" class="alert alert-danger">
@@ -21,7 +21,7 @@
 
           <div class="form-group col-md-6">
             <label for="n_cliente" class="col-form-label font-weight-bold">Nombre de la Empresa</label>
-            <input type="text" class="form-control" id="n_cliente" placeholder="Más Negocio S.A.P.I. DE C.V."
+            <input type="text" class="form-control" id="n_cliente" placeholder="Razón social ó nombre comercial"
                    [(ngModel)]="cliente.p_nombre_cliente" name="n_cliente" #n_cliente="ngModel" required>
             <div [hidden]="n_cliente.valid || n_cliente.pristine" class="alert alert-danger">
               El nombre del clientes es requerido.
@@ -30,7 +30,7 @@
         </div>
 
         <div class="form-group">
-          <label for="contexto" class="col-form-label font-weight-bold">Nombre del Aplicativo <p><small>Elija un nombre corto relacionado con la empresa, el nombre debe tener una longitud de 4 a 8 caracteres.</small></p></label>
+          <label for="contexto" class="col-form-label font-weight-bold">Nombre del Aplicativo <p><small>Elija un nombre corto relacionado con la empresa, el nombre debe tener una longitud de 4 a 10 caracteres y sin espacios.</small></p></label>
           <div class="input-group">
             <div class="input-group-addon">{{ url }}</div>
             <input type="text" class="form-control" id="contexto" placeholder="Nombre del Aplicativo"
@@ -87,7 +87,7 @@
 
           <div class="form-group col-md-8">
             <label for="correo" class="col-form-label font-weight-bold">Correo</label>
-            <input type="email" class="form-control" id="correo" placeholder="nombre@masnegocio.com"
+            <input type="email" class="form-control" id="correo" placeholder="correo@dominio.com"
                    [(ngModel)]="cliente.p_correo_electronico"
                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,4})$"
                    name="correo" #correo="ngModel" required>
@@ -107,8 +107,9 @@
           <p class="text-info">{{ message }}</p>
         </div>
 
-        <button class="btn btn-info btn-sm float-right" [disabled]="!clienteForm.form.valid" (click)="crearApp()">Crear Aplicativo</button>
+        <button class="btn btn-masnegocio btn-sm float-right" [disabled]="!clienteForm.form.valid" (click)="crearApp()">Crear Aplicativo</button>
       </div>
     </div>
+    <h6 class="text-danger">*Todos los campos son obligatorios</h6>
   </form>
 </div>

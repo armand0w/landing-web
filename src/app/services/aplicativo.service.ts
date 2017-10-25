@@ -9,12 +9,12 @@ export class AplicativoService {
 
   constructor( private http: Http ) { }
 
-  consumir( event: object ) {
+  /*consumir( event: object ) {
     return this.http.request('', event)
       .map(res => {
         return res.json();
       });
-  }
+  }*/
 
   consumirPromesa( event: object ) {
     return new Promise((resolve, reject) => {

@@ -116,6 +116,14 @@ export class LandingComponent implements OnInit {
               'Content-Type': 'application/json;charset=UTF-8'
             },
             body: { message: 'Actualizando datos del administrador.' }
+          },
+          {
+            url: this.urLanding + 'distribuir',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: { message: 'Aplicativo creado exitosamente.' }
           }
         ];
       });
@@ -165,6 +173,10 @@ export class LandingComponent implements OnInit {
         textContent: response['message']
       };
     }
+
+    modalRef.result.then((reason) => {
+      location.reload();
+    });
   }
 
   private loopEvents = () => {
@@ -182,7 +194,7 @@ export class LandingComponent implements OnInit {
               lastResponse = data;
               this.message = data['message'];
               if ( data && data['continue'] ) {
-                this.completado += 10;
+                this.completado += 100 / this.eventos.length;
               } else {
                 continueLoop = false;
               }
