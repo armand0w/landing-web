@@ -1,48 +1,45 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { Headers, RequestOptions } from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 
 @Injectable()
-export class AplicativoService {
+export class AplicativoService
+{
+  constructor( private http: HttpClient ) { }
 
-  constructor( private http: Http ) { }
+  consumirPromesa( event: object )
+  {
+    let httpReq = new HttpRequest( event['method'], event['url'], event['body'], { headers: new HttpHeaders( event['headers'] )} );
 
-  /*consumir( event: object ) {
-    return this.http.request('', event)
-      .map(res => {
-        return res.json();
-      });
-  }*/
-
-  consumirPromesa( event: object ) {
     return new Promise((resolve, reject) => {
-      this.http.request('', event)
+      this.http.request( httpReq )
         .toPromise()
         .then(
-          res => { // Success
-            resolve(res.json());
+          res => {
+            resolve(res['body']);
           },
-          msg => { // Error
+          msg => {
             reject(msg);
           });
     });
   }
 
-  properties() {
-    let headers = new Headers( { 'Content-Type': 'application/json' } );
-    let options = new RequestOptions( { headers: headers } );
+  properties()
+  {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
 
     return new Promise( (resolve, reject) => {
-      this.http.post('properties', {}, options )
-      // this.http.get('http://localhost:4200/assets/properties.json', options )
+      this.http.post('properties', {}, httpOptions )
+      // this.http.get('http://localhost:4200/assets/properties.json', httpOptions )
         .toPromise()
         .then(
-          (res) => {
-            resolve( res.json() );
+          res => {
+            resolve( res );
           },
-          (msg) => {
+          msg => {
             reject( msg );
           });
     });

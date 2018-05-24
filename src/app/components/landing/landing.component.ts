@@ -8,8 +8,8 @@ import { ModalComponent } from '../modal/modal.component';
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css']
 })
-export class LandingComponent implements OnInit {
-
+export class LandingComponent implements OnInit
+{
   public completado: number;
   public onProgress: boolean;
   public message: string;
@@ -23,8 +23,9 @@ export class LandingComponent implements OnInit {
   constructor( protected _aplicativoService: AplicativoService,
                private _modalService: NgbModal ) {}
 
-  ngOnInit() {
-    this.cliente = { p_clave_usuario: '' };
+  ngOnInit()
+  {
+    this.cliente = { };
 
     this._aplicativoService.properties()
       .then( ( prop ) => {
@@ -34,7 +35,8 @@ export class LandingComponent implements OnInit {
         this.cliente = {
           p_clave_usuario: '',
           p_clave_producto: prop['clave_producto'],
-          connection_reference: prop['connection_reference']
+          connection_reference: prop['connection_reference'],
+          p_subproducto: 1
         };
         this.eventos = [
           {
@@ -78,7 +80,7 @@ export class LandingComponent implements OnInit {
             body: { message: 'Creando artefacto.' }
           },
           {
-            url: this.urLanding + 'creararnotificacion',
+            url: this.urLanding + 'crearnotificacion',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8'
@@ -132,14 +134,14 @@ export class LandingComponent implements OnInit {
     this.onProgress = false;
   }
 
-  public crearApp(): void {
+  public crearApp(): void
+  {
     this.onProgress = true;
 
     this.cliente['p_password'] = this.cliente['p_clave_usuario'];
     this.cliente['p_apellidos'] = this.cliente['apellidop'] + ' ' + this.cliente['apellidom'];
     this.cliente['schema_name'] = 'mn_' + this.cliente['p_contexto'] + this.sufix;
-    this.cliente['artifact_conn'] = 'cnn' + this.cliente['p_contexto'][0].toUpperCase() +
-      this.cliente['p_contexto'].slice(1) + 'ExpensesSemillaV10';
+    this.cliente['artifact_conn'] = 'cnn' + this.cliente['p_contexto'][0].toUpperCase() + this.cliente['p_contexto'].slice(1) + 'ExpensesSemillaV10';
     this.cliente['connections'] = {
       references: [
         {
@@ -149,16 +151,27 @@ export class LandingComponent implements OnInit {
       ]
     };
 
+    switch ( this.cliente['p_subproducto'] )
+    {
+      case 1: this.cliente['p_subproducto'] = 'Smart'; break;
+      case 2: this.cliente['p_subproducto'] = 'SmartPlus'; break;
+      case 3: this.cliente['p_subproducto'] = 'Enterprise'; break;
+      default: this.cliente['p_subproducto'] = 'Smart';
+    }
+
     this.loopEvents()
       .then( (res) => {
         this.open( res );
       });
   }
 
-  public open( response: any ): void {
+  public open( response: any ): void
+  {
     const modalRef = this._modalService.open( ModalComponent, { size: 'lg'} );
 
-    if ( response['continue'] ) {
+    if ( response['continue'] )
+    {
+      this.completado = 100;
       modalRef.componentInstance.inputs = {
         title: '¡Felicidaces! Se ha creado tu aplicativo.',
         typeClass: 'modal-header bg-success text-white',
@@ -166,7 +179,9 @@ export class LandingComponent implements OnInit {
         'para que pueda iniciar la configuración. <br><br> ' +
         'En caso contrario contáctanos a <a href="mailto:soportecloud@masnegocio.com" target="_blank">soportecloud@masnegocio.com</a>'
       };
-    } else {
+    }
+    else
+    {
       modalRef.componentInstance.inputs = {
         title: 'Error al crear aplicativo.',
         typeClass: 'modal-header bg-danger text-white',
@@ -186,23 +201,30 @@ export class LandingComponent implements OnInit {
         let item = this.eventos[cont];
         let continueLoop = true;
 
-        if ( continueLoop ) {
+        if ( continueLoop )
+        {
           this.message = item['body']['message'];
           item['body'] = this.cliente;
           this._aplicativoService.consumirPromesa( item )
             .then( ( data ) => {
               lastResponse = data;
               this.message = data['message'];
-              if ( data && data['continue'] ) {
-                this.completado += 100 / this.eventos.length;
-              } else {
+              if ( data && data['continue'] )
+              {
+                this.completado += Math.round( 100 / this.eventos.length );
+              }
+              else
+              {
                 continueLoop = false;
               }
             })
             .then( () => {
-              if ( continueLoop && cont !== this.eventos.length - 1 ) {
+              if ( continueLoop && cont !== this.eventos.length - 1 )
+              {
                 loop( ++cont );
-              } else {
+              }
+              else
+              {
                 lastResponse['rootEvent'] = item;
                 resolve( lastResponse );
               }

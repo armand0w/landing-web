@@ -1,7 +1,7 @@
 {
-  "url" : "http://des.face7.masnegocio.com/",
+  "url" : "http://des.core.masnegocio.com/",
   "connection_reference" : "cnnExpensesSemillaV10",
   "clave_producto" : "MN-EXPENSES-ENTERPRISE-V30",
-  "urLanding" : "http://des.face7.masnegocio.com/mn-landing-page-services/landing/",
+  "urLanding" : "http://des.core.masnegocio.com/mn-lp-expenses-srv/landing/",
   "sufix" : "_e_xpenses_enterprise_v3"
 }
