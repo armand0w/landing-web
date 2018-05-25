@@ -167,7 +167,7 @@ export class LandingComponent implements OnInit
 
   public open( response: any ): void
   {
-    const modalRef = this._modalService.open( ModalComponent, { size: 'lg'} );
+    const modalRef = this._modalService.open( ModalComponent, { size: 'lg', backdrop: 'static', centered: true } );
 
     if ( response['continue'] )
     {
