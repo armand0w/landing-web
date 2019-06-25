@@ -32,8 +32,8 @@ export class AplicativoService
     };
 
     return new Promise( (resolve, reject) => {
-      this.http.post('properties', {}, httpOptions )
-      // this.http.get('http://localhost:4200/assets/properties.json', httpOptions )
+      // this.http.post('properties', {}, httpOptions )
+      this.http.get('http://localhost:4200/assets/properties.json', httpOptions )
         .toPromise()
         .then(
           res => {
