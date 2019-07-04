@@ -35,7 +35,7 @@ export class LandingComponent implements OnInit {
           p_clave_usuario: '',
           p_clave_producto: prop['clave_producto'],
           connection_reference: prop['connection_reference'],
-          p_subproducto: 1
+          p_package: 1
         };
         this.eventos = [
           {
@@ -157,18 +157,18 @@ export class LandingComponent implements OnInit {
       ]
     };
 
-    switch (this.cliente['p_subproducto']) {
+    switch (this.cliente['p_package']) {
       case 1:
-        this.cliente['p_subproducto'] = 'Smart';
+        this.cliente['p_package'] = 'SMART';
         break;
       case 2:
-        this.cliente['p_subproducto'] = 'SmartPlus';
+        this.cliente['p_package'] = 'SMARTPLUS';
         break;
       case 3:
-        this.cliente['p_subproducto'] = 'Enterprise';
+        this.cliente['p_package'] = 'ENTERPRISE';
         break;
       default:
-        this.cliente['p_subproducto'] = 'Smart';
+        this.cliente['p_package'] = 'SMART';
     }
 
     this.loopEvents()
@@ -203,6 +203,7 @@ export class LandingComponent implements OnInit {
   }
 
   private loopEvents = () => {
+    this.completado = 0;
     let lastResponse = {};
     return new Promise((resolve, reject) => {
       let loop = (cont) => {
