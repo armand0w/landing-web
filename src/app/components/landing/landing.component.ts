@@ -9,27 +9,32 @@ import {ModalComponent} from '../modal/modal.component';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
-  public completado: number;
-  public onProgress: boolean;
-  public message: string;
-  public url: string;
+  completado: number;
+  onProgress: boolean;
+  message: string;
+  url: string;
+  urlEngine: string;
+  extractor: string;
 
-  public urLanding: string;
-  public sufix: string;
-  public cliente: any;
-  public eventos: object [];
+  urLanding: string;
+  sufix: string;
+  cliente: any;
+  eventos: object [];
+  modulos: object [];
 
-  constructor(protected _aplicativoService: AplicativoService,
-              private _modalService: NgbModal) {
-  }
+  constructor(
+    protected aplicativoService: AplicativoService,
+    private ngbModal: NgbModal) {}
 
   ngOnInit() {
     this.cliente = {};
 
-    this._aplicativoService.properties()
+    this.aplicativoService.properties()
       .then((prop) => {
         this.url = prop['url'];
+        this.urlEngine = prop['urlEngine'];
         this.urLanding = prop['urLanding'];
+        this.extractor = prop['ext_acl_v20'];
         this.sufix = prop['sufix'];
         this.cliente = {
           p_clave_usuario: '',
@@ -127,6 +132,28 @@ export class LandingComponent implements OnInit {
             body: {message: 'Aplicativo creado exitosamente.'}
           }
         ];
+      })
+      .then(() => {
+        this.aplicativoService.consumirPromesa({
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          },
+          url: this.urlEngine,
+          body: {
+            id_extractor: this.extractor,
+            connections: {
+              references: [
+                {
+                  connection_reference: "cnnACLSemillaV20",
+                  connection_id: "cnnACLSemillaV20"
+                }
+              ]
+            }
+          }
+        }).then( (ext) => {
+          this.modulos = ext['data'];
+        })
       });
 
     this.completado = 0;
@@ -178,7 +205,7 @@ export class LandingComponent implements OnInit {
   }
 
   public open(response: any): void {
-    const modalRef = this._modalService.open(ModalComponent, {size: 'lg', backdrop: 'static', centered: true});
+    const modalRef = this.ngbModal.open(ModalComponent, {size: 'lg', backdrop: 'static', centered: true});
 
     if (response['continue']) {
       this.completado = 100;
@@ -213,7 +240,7 @@ export class LandingComponent implements OnInit {
         if (continueLoop) {
           this.message = item['body']['message'];
           item['body'] = this.cliente;
-          this._aplicativoService.consumirPromesa(item)
+          this.aplicativoService.consumirPromesa(item)
             .then((data) => {
               lastResponse = data;
               this.message = data['message'];

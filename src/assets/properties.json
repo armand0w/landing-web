@@ -3,5 +3,7 @@
   "connection_reference" : "cnnExpensesSemillaV10",
   "clave_producto" : "MN-EXPENSES-ENTERPRISE-V30",
   "urLanding" : "http://des.core.masnegocio.com/mn-lp-expenses-srv/landing/",
-  "sufix" : "_e_xpenses_enterprise_v3"
+  "urlEngine": "http://des.core.masnegocio.com/mn-radt-engine/services/integration",
+  "sufix" : "_e_xpenses_enterprise_v3",
+  "ext_acl_v20": "extModulosAclV20ExpensesSemillaV10"
 }

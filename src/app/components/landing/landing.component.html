@@ -50,23 +50,35 @@
           </div>
         </div>
 
+        <hr class="mt-4">
         <div class="form-group">
-          <label for="customRadioInline1" class="col-form-label font-weight-bold">Subproducto</label>
+          <label for="customRadioInline1" class="col-form-label font-weight-bold mb-2">Version</label>
           <div class="">
             <div class="custom-control custom-radio custom-control-inline col-md-3">
               <input type="radio" id="customRadioInline1" name="customRadioInline" #customRadioInline="ngModel" class="custom-control-input" [(ngModel)]="cliente.p_package" [value]="1">
               <label class="custom-control-label" for="customRadioInline1">Smart</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline col-md-4">
-              <input type="radio" id="customRadioInline2" name="customRadioInline" #customRadioInline="ngModel" class="custom-control-input" [(ngModel)]="cliente.p_package" [value]="2">
-              <label class="custom-control-label" for="customRadioInline2">SmartPlus</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline col-md-4">
               <input type="radio" id="customRadioInline3" name="customRadioInline" #customRadioInline="ngModel" class="custom-control-input" [(ngModel)]="cliente.p_package" [value]="3">
               <label class="custom-control-label" for="customRadioInline3">Enterprise</label>
             </div>
+            <div class="custom-control custom-radio custom-control-inline col-md-4">
+              <input type="radio" id="customRadioInline2" name="customRadioInline" #customRadioInline="ngModel" class="custom-control-input" [(ngModel)]="cliente.p_package" [value]="2">
+              <label class="custom-control-label" for="customRadioInline2">Personalizado</label>
+            </div>
           </div>
         </div>
+
+        <div class="mt-3" [hidden]="cliente.p_package != 2">
+          <label class="col-form-label font-weight-bold mb-2">Modulos disponibles</label>
+          <div class="form-check form-check-inline form-row align-items-center">
+            <div class="custom-control custom-checkbox form-check-inline" *ngFor="let m of modulos">
+              <input type="checkbox" class="custom-control-input" [id]="m.v_code">
+              <label class="custom-control-label" [htmlFor]="m.v_code">{{m.v_description}}</label>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <h4 class="card-header">Datos del Administrador</h4>
