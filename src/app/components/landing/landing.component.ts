@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AplicativoService} from '../../services/aplicativo.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalComponent} from '../modal/modal.component';
+import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-landing',
@@ -19,12 +20,19 @@ export class LandingComponent implements OnInit {
   urLanding: string;
   sufix: string;
   cliente: any;
-  eventos: object [];
-  modulos: object [];
+  eventos: object[];
+  modulos: object[];
+
+  checks: FormGroup;
 
   constructor(
     protected aplicativoService: AplicativoService,
-    private ngbModal: NgbModal) {}
+    private ngbModal: NgbModal,
+    private formBuilder: FormBuilder ) {
+    this.checks = this.formBuilder.group({
+      modulesChecks: new FormArray([])
+    });
+  }
 
   ngOnInit() {
     this.cliente = {};
@@ -153,6 +161,15 @@ export class LandingComponent implements OnInit {
           }
         }).then( (ext) => {
           this.modulos = ext['data'];
+          this.modulos.map( () => {
+            try {
+              const control = new FormControl(false); // if first item set to true, else false
+              (this.checks.controls.modulesChecks as FormArray).push(control);
+            }
+            catch (e) {
+              console.error(e);
+            }
+          });
         })
       });
 

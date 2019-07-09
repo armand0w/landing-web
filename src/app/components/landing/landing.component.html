@@ -71,12 +71,13 @@
 
         <div class="mt-3 card card-body" [hidden]="cliente.p_package != 2">
           <label class="col-form-label font-weight-bold mb-2">Modulos disponibles</label>
-          <div class="form-check form-check-inline form-row align-items-center">
-            <div class="custom-control custom-checkbox form-check-inline" *ngFor="let m of modulos">
-              <input type="checkbox" class="custom-control-input" [id]="m.v_code">
-              <label class="custom-control-label" [attr.for]="m.v_code">{{m.v_description}}</label>
-            </div>
-          </div>
+            <form [formGroup]="checks" class="form-check form-check-inline form-row align-items-center">
+              <div formArrayName="modulesChecks" *ngFor="let m of checks.controls.modulesChecks.controls; let i = index"
+                   class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input" [formControlName]="i" [id]="modulos[i].v_code">
+                <label class="custom-control-label" [attr.for]="modulos[i].v_code">{{modulos[i].v_description}}</label>
+              </div>
+            </form>
         </div>
 
       </div>
