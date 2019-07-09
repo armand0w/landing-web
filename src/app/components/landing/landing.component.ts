@@ -174,8 +174,8 @@ export class LandingComponent implements OnInit {
           connection_id: this.cliente['artifact_conn']
         },
         {
-          connection_reference: "cnnACLSemillaV10",
-          connection_id: "cnnACLSemillaV10"
+          connection_reference: "cnnACLSemillaV20",
+          connection_id: "cnnACLSemillaV20"
         },
         {
           connection_reference: "cnnNotificacionesSemillaV10",

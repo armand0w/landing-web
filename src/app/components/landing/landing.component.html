@@ -69,12 +69,12 @@
           </div>
         </div>
 
-        <div class="mt-3" [hidden]="cliente.p_package != 2">
+        <div class="mt-3 card card-body" [hidden]="cliente.p_package != 2">
           <label class="col-form-label font-weight-bold mb-2">Modulos disponibles</label>
           <div class="form-check form-check-inline form-row align-items-center">
             <div class="custom-control custom-checkbox form-check-inline" *ngFor="let m of modulos">
               <input type="checkbox" class="custom-control-input" [id]="m.v_code">
-              <label class="custom-control-label" [htmlFor]="m.v_code">{{m.v_description}}</label>
+              <label class="custom-control-label" [attr.for]="m.v_code">{{m.v_description}}</label>
             </div>
           </div>
         </div>

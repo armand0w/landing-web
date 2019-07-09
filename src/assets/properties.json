@@ -1,9 +1,9 @@
 {
+  "urlEngine": "http://des.core.masnegocio.com/mn-radt-engine/services/integration",
+  "urLanding" : "http://des.core.masnegocio.com/mn-lp-expenses-srv/landing/",
   "url" : "http://des.core.masnegocio.com/",
+  "ext_acl_v20": "extModulosAclV20ExpensesSemillaV10",
   "connection_reference" : "cnnExpensesSemillaV10",
   "clave_producto" : "MN-EXPENSES-ENTERPRISE-V30",
-  "urLanding" : "http://des.core.masnegocio.com/mn-lp-expenses-srv/landing/",
-  "urlEngine": "http://des.core.masnegocio.com/mn-radt-engine/services/integration",
-  "sufix" : "_e_xpenses_enterprise_v3",
-  "ext_acl_v20": "extModulosAclV20ExpensesSemillaV10"
+  "sufix" : "_e_xpenses_enterprise_v3"
 }
