@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {AplicativoService} from '../../services/aplicativo.service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ModalComponent} from '../modal/modal.component';
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { AplicativoService } from '../../services/aplicativo.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../modal/modal.component';
+import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
 @Component({
   selector: 'app-landing',
@@ -27,7 +27,7 @@ export class LandingComponent implements OnInit {
 
   constructor(
     protected aplicativoService: AplicativoService,
-    private ngbModal: NgbModal,
+    private modalService: NgbModal,
     private formBuilder: FormBuilder ) {
     this.checks = this.formBuilder.group({
       modulesChecks: new FormArray([])
@@ -48,7 +48,8 @@ export class LandingComponent implements OnInit {
           p_clave_usuario: '',
           p_clave_producto: prop['clave_producto'],
           connection_reference: prop['connection_reference'],
-          p_package: 1
+          def_package: 1,
+          cust_package: 1
         };
         this.eventos = [
           {
@@ -66,6 +67,14 @@ export class LandingComponent implements OnInit {
               'Content-Type': 'application/json;charset=UTF-8'
             },
             body: {message: 'Creando cliente.'}
+          },
+          {
+            url: this.urLanding + 'paquetemodulos',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: {message: 'Asignando paquetes al producto.'}
           },
           {
             url: this.urLanding + 'crearparametros',
@@ -200,19 +209,20 @@ export class LandingComponent implements OnInit {
         }
       ]
     };
+    this.cliente['p_modules'] = [];
 
-    switch (this.cliente['p_package']) {
-      case 1:
-        this.cliente['p_package'] = 'SMART';
-        break;
-      case 2:
-        this.cliente['p_package'] = 'SMARTPLUS';
-        break;
-      case 3:
-        this.cliente['p_package'] = 'ENTERPRISE';
-        break;
-      default:
-        this.cliente['p_package'] = 'SMART';
+    this.cliente['p_package'] = this.getMainPackage(this.cliente['def_package']);
+
+    if ( this.cliente['p_package'] == 'CUSTOM' )
+    {
+      this.cliente['p_descripcion'] = `Paquete personalizado para: ${this.cliente['p_clave_cliente']}`;
+      this.cliente['p_type'] = this.getMainPackage(this.cliente['cust_package']);
+      this.cliente['p_package'] = this.getMainPackage(this.cliente['cust_package']) + '-' + this.cliente['p_clave_cliente'];
+      this.checks.value.modulesChecks.map((o, i) => {
+        if ( o ) {
+          this.cliente['p_modules'].push( this.modulos[i]['v_code'] );
+        }
+      });
     }
 
     this.loopEvents()
@@ -222,12 +232,12 @@ export class LandingComponent implements OnInit {
   }
 
   public open(response: any): void {
-    const modalRef = this.ngbModal.open(ModalComponent, {size: 'lg', backdrop: 'static', centered: true});
+    const modalRef = this.modalService.open(ModalComponent, { size: 'lg', backdrop: 'static', centered: true });
 
     if (response['continue']) {
       this.completado = 100;
       modalRef.componentInstance.inputs = {
-        title: '¡Felicidaces! Se ha creado tu aplicativo.',
+        title: '¡Felicidades! Se ha creado tu instancia de E-xpenses.',
         typeClass: 'modal-header bg-success text-white',
         textContent: 'En breve el administrador que definiste para el sistema recibirá un correo con sus accesos ' +
           'para que pueda iniciar la configuración. <br><br> ' +
@@ -284,5 +294,21 @@ export class LandingComponent implements OnInit {
 
       loop(0);
     });
-  }
+  };
+
+  private getMainPackage(number: number): string {
+    let name: string = '';
+    switch ( number ) {
+      case 1:
+        name = 'SMART';
+        break;
+      case 2:
+        name = 'ENTERPRISE';
+        break;
+      default:
+        name = 'CUSTOM';
+    }
+
+    return name;
+  };
 }

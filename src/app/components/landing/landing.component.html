@@ -55,29 +55,50 @@
           <label for="customRadioInline1" class="col-form-label font-weight-bold mb-2">Version</label>
           <div class="">
             <div class="custom-control custom-radio custom-control-inline col-md-3">
-              <input type="radio" id="customRadioInline1" name="customRadioInline" #customRadioInline="ngModel" class="custom-control-input" [(ngModel)]="cliente.p_package" [value]="1">
-              <label class="custom-control-label" for="customRadioInline1">Smart</label>
+              <input type="radio" id="customRadioInline1" name="customRadioInline" #customRadioInline="ngModel" class="custom-control-input" [(ngModel)]="cliente.def_package" [value]="1">
+              <label class="custom-control-label" for="customRadioInline1">SMART</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline col-md-4">
-              <input type="radio" id="customRadioInline3" name="customRadioInline" #customRadioInline="ngModel" class="custom-control-input" [(ngModel)]="cliente.p_package" [value]="3">
-              <label class="custom-control-label" for="customRadioInline3">Enterprise</label>
+              <input type="radio" id="customRadioInline3" name="customRadioInline" #customRadioInline="ngModel" class="custom-control-input" [(ngModel)]="cliente.def_package" [value]="2">
+              <label class="custom-control-label" for="customRadioInline3">ENTERPRISE</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline col-md-4">
-              <input type="radio" id="customRadioInline2" name="customRadioInline" #customRadioInline="ngModel" class="custom-control-input" [(ngModel)]="cliente.p_package" [value]="2">
+              <input type="radio" id="customRadioInline2" name="customRadioInline" #customRadioInline="ngModel" class="custom-control-input" [(ngModel)]="cliente.def_package" [value]="3">
               <label class="custom-control-label" for="customRadioInline2">Personalizado</label>
             </div>
           </div>
         </div>
 
-        <div class="mt-3 card card-body" [hidden]="cliente.p_package != 2">
-          <label class="col-form-label font-weight-bold mb-2">Modulos disponibles</label>
+        <div class="mt-3 card" [hidden]="cliente.def_package != 3">
+          <div class="card-header">
+            <h6>Tipo de rutas</h6>
+          </div>
+          <div class="card-body">
+            <div class="">
+              <div class="custom-control custom-radio custom-control-inline col-md-3">
+                <input type="radio" id="customRadioPaq1" name="customRadioPaq" class="custom-control-input" [(ngModel)]="cliente.cust_package" [value]="1">
+                <label class="custom-control-label" for="customRadioPaq1">Rutas SMART</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline col-md-4">
+                <input type="radio" id="customRadioPaq2" name="customRadioPaq" class="custom-control-input" [(ngModel)]="cliente.cust_package" [value]="2">
+                <label class="custom-control-label" for="customRadioPaq2">Rutas ENTERPRISE</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-header">
+            <h6>Modulos disponibles</h6>
+          </div>
+          <div class="card-body">
             <form [formGroup]="checks" class="form-check form-check-inline form-row align-items-center">
-              <div formArrayName="modulesChecks" *ngFor="let m of checks.controls.modulesChecks.controls; let i = index"
+              <div formArrayName="modulesChecks" *ngFor="let m of checks.controls.modulesChecks['controls']; let i = index"
                    class="custom-control custom-checkbox form-check-inline">
                 <input type="checkbox" class="custom-control-input" [formControlName]="i" [id]="modulos[i].v_code">
                 <label class="custom-control-label" [attr.for]="modulos[i].v_code">{{modulos[i].v_description}}</label>
               </div>
             </form>
+          </div>
+
         </div>
 
       </div>

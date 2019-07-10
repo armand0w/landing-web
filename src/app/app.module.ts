@@ -28,6 +28,7 @@ import { ModalComponent } from './components/modal/modal.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgbModule
   ],
   providers: [
     AplicativoService
